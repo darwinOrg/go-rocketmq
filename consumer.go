@@ -8,7 +8,6 @@ import (
 	dgctx "github.com/darwinOrg/go-common/context"
 	dglogger "github.com/darwinOrg/go-logger"
 	"github.com/google/uuid"
-	"time"
 )
 
 type PushConsumerClient struct {
@@ -43,9 +42,8 @@ func (c *PushConsumerClient) Subscribe(topic string, handler SubscribeHandler) e
 	return c.pushConsumer.Subscribe(topic, consumer.MessageSelector{}, func(_ context.Context, msgs ...*primitive.MessageExt) (consumer.ConsumeResult, error) {
 		for _, msg := range msgs {
 			body := string(msg.Body)
-			nowStr := time.Now().Format("2006-01-02 15:04:05")
 			ctx := &dgctx.DgContext{TraceId: uuid.NewString() + "_rocketmq"}
-			dglogger.Infof(ctx, "%s 读取到一条消息，topic: %s, 消息id: %s, 消息内容: %s", nowStr, msg.Topic, msg.MsgId, body)
+			dglogger.Infof(ctx, "读取到一条消息，topic: %s, 消息id: %s, 消息内容: %s", msg.Topic, msg.MsgId, body)
 			err := handler(ctx, body)
 			if err != nil {
 				return consumer.ConsumeRetryLater, err
