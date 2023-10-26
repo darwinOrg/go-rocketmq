@@ -5,6 +5,8 @@ go 1.19
 require github.com/apache/rocketmq-client-go/v2 v2.1.2
 
 require (
+	github.com/darwinOrg/go-common v0.0.22 // indirect
+	github.com/darwinOrg/go-logger v0.0.1 // indirect
 	github.com/emirpasic/gods v1.18.1 // indirect
 	github.com/golang/mock v1.6.0 // indirect
 	github.com/google/uuid v1.3.1 // indirect
